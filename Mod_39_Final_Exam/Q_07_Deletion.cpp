@@ -1,10 +1,3 @@
-/*
-Question # 01
-    Traverse the following binary tree using the inorder, preorder,  
-    postorder, and level order techniques. Level each of the nodes of 
-    the tree. Also, find the height of the tree. 
-*/
-
 #include<bits/stdc++.h>
 using namespace std;
 
@@ -21,6 +14,8 @@ public:
 };
 
 treeNode *insertionBST(treeNode *root, int value);
+treeNode *InOrderSucc(treeNode *root);
+treeNode *deletionBST(treeNode *root, int value);
 int Height(treeNode* root);
 void CurrentLevel(treeNode* root, int level);
 void LevelOrderFromLeaf(treeNode* root);
@@ -49,6 +44,45 @@ treeNode *insertionBST(treeNode *root, int value){
     return root;
 }
 
+// Find Inorder Successer
+treeNode *InOrderSucc(treeNode *root){
+    treeNode *curr = root;
+    while(curr->leftChild != NULL){
+        curr = curr->leftChild;
+    }
+    return curr;
+}
+
+// Deletion BST
+treeNode *deletionBST(treeNode *root, int value){
+    if(value < root->data){
+        root->leftChild = deletionBST(root->leftChild, value);
+    }
+    else if(value > root->data){
+        root->rightChild = deletionBST(root->rightChild, value);
+    }
+    else{
+        // Implementation of case 3
+        if(root->leftChild == NULL){
+            // Case 1 | Case 2
+            treeNode *tmp = root->rightChild;
+            delete (root);
+            return tmp;
+        }
+        else if(root->rightChild == NULL){
+            // Case 2
+            treeNode *tmp = root->leftChild;
+            delete (root);
+            return tmp;
+        }
+        else{
+            treeNode *tmp = InOrderSucc(root->rightChild);
+            root->data = tmp->data;
+            root->rightChild = deletionBST(root->rightChild, tmp->data);
+        }
+    }
+    return root;
+}
 
 // Height of Tree
 int Height(treeNode* root){
@@ -144,11 +178,17 @@ int main(){
     cout<<endl<<"IN-Order Traversal:"<<endl<<"\t";
     InOrder(root);
     
-    cout<<endl<<"PRE-Order Traversal:"<<endl<<"\t";
-    PreOrder(root);
+    // cout<<endl<<"PRE-Order Traversal:"<<endl<<"\t";
+    // PreOrder(root);
    
-    cout<<endl<<"POST-Otrder Traversal:"<<endl<<"\t";
-    PostOrder(root);
+    // cout<<endl<<"POST-Otrder Traversal:"<<endl<<"\t";
+    // PostOrder(root);
+
+    root = deletionBST(root, arr[0]);
+    cout<<endl<<"Level-Order After Delete: "<<endl<<"\t";
+    LevelOrderFromRoot(root);
+    cout<<endl<<"IN-Order After Delete:"<<endl<<"\t";
+    InOrder(root);
 }
 
 /*
