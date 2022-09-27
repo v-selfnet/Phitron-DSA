@@ -47,6 +47,7 @@ treeNode *InOrderSucc(treeNode *root){
     treeNode *curr = root;
     while(curr->leftChild != NULL){
         curr = curr->leftChild;
+        // cout<<curr->data<<" -> "; //ok for path
     }
     return curr;
 }
@@ -75,6 +76,13 @@ treeNode *deletionBST(treeNode *root, int value){
         }
         else{
             treeNode *tmp = InOrderSucc(root->rightChild);
+            // path not working
+            // treeNode *path = root;
+            // while(path->rightChild != NULL){
+            //     path = path->rightChild;
+            //     cout<<path->data<<" -> ";
+            // }
+            cout<<tmp->data; // Inorder Successor value.
             root->data = tmp->data;
             root->rightChild = deletionBST(root->rightChild, tmp->data);
         }
@@ -137,6 +145,9 @@ int main(){
     */
     
     int arr[13] = {7, 5, 12, 3, 6, 9, 15, 1, 4, 8, 10, 13, 17};
+    
+    // int arr[16] = {30, 28, 60, 40, 65, 38, 50, 62, 66, 35, 39, 61, 63, 33, 36, 34};
+    
     for(int i=0; i<13; i++){
         root = insertionBST(root, arr[i]);
     }
@@ -168,6 +179,8 @@ int main(){
                 cout<<"Enter Value for Deletion: ";
                 cin>>del;
                 root = deletionBST(root, del);
+                cout<<" is the Inorder Successer of "<<del<<endl;
+                LevelOrderFromRoot(root); cout<<endl;
                 break;
             default:
                 break;
@@ -242,10 +255,10 @@ int arr[16] = {30, 28, 60, 40, 65, 38, 50, 62, 66, 35, 39, 61, 63, 33, 36, 34};
                               /  \        /  \
                              /    \      /    \
                             38    50    62    66   
-                           /\                  /\
-                          /  \                /  \
-                         /    \              /    \
-                        35    39            61    63
+                           /\          /\
+                          /  \        /  \
+                         /    \      /    \
+                        35    39    61    63
                        /\
                       /  \
                      /    \
