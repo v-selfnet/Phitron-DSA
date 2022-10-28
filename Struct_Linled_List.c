@@ -14,8 +14,6 @@ void EmpInfoPrint(struct Emp data){
     data.id = 1; // auto generate id number not working
     printf("%d\t%s\t%d\t%s\t%d\n",
     data.id, data.name, data.age, data.dese, data.salary);
-
-   
 }
 
 struct Node{
