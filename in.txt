@@ -1,0 +1,9 @@
+8
+Kamal 45 Dir. 1200
+Jamal 25 CEO 4500
+Karim 51 Man. 2300
+Monir 48 Sup. 3300
+Jasim 25 Dr. 1200
+Khan 22 Prof. 4500
+Rahat 35 Teacher 7300
+Pathan 48 BDM 6500
