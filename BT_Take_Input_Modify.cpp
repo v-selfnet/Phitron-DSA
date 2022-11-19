@@ -29,21 +29,39 @@ Node* CreateNode(Node *&root, int data){
 }
 
 void PrintInOrder(Node *root){
+    /* In Order Traversal Recursive */
     if(root == NULL) return;
     PrintInOrder(root->leftChild);
     cout<<root->data<<" ";
     PrintInOrder(root->rightChild);
 }
 
+void LevelOrder(Node *root){
+    /* Level Order Traversal [from root to leaf] */
+    if(root == NULL) return;
+    queue<Node*>q;
+    q.push(root);
+    
+    while(!q.empty()){
+        Node *currentRoot = q.front();
+        q.pop();
+        cout<<currentRoot->data<<" ";
+        
+        if(currentRoot->leftChild != NULL)
+            q.push(currentRoot->leftChild);
+        if(currentRoot->rightChild != NULL)
+            q.push(currentRoot->rightChild);
+    }
+}
+
 int main(){
-    // Node *root = NULL;
     int val;
     cin>>val;
     Node *root = new Node(val);
     
     queue <Node*> q;
     q.push(root);
-    
+
     while(!q.empty()){
     /* Level Order input using queue Data Structure */
         Node *currentRoot = q.front();
@@ -53,15 +71,19 @@ int main(){
         cin>>left>>right;
         
         if(left != -1){
-            currentRoot->leftChild = CreateNode(currentRoot, left);
+            currentRoot->leftChild = CreateNode(root, left);
             q.push(currentRoot->leftChild);
         }
+        
         if(right != -1){
-            currentRoot->rightChild = CreateNode(currentRoot, right);
+            currentRoot->rightChild = CreateNode(root, right);
             q.push(currentRoot->rightChild);
         }
     }
+
     PrintInOrder(root);
+    cout<<endl;
+    LevelOrder(root);
 }
 
 /*
